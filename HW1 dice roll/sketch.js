@@ -8,13 +8,14 @@
 var exclMark, diceButton, rollDice, ellipPositionX, rollDiceValue;
 /**
  * setup : Initialization runs once; called automatically
- * Summarize code that you add
+ * The objectve of this program is allow the user to "roll a dice" by clicking the green button.
  */
 function setup() {
     createCanvas(400, 400);
-    background(208, 211, 212);
-    colorMode(HSB, 255);
+    colorMode(HSB, 360, 100, 100);
+    background(195, 2, 83);
     noStroke();
+    exclMark();
 }
 
 /**
@@ -22,9 +23,7 @@ function setup() {
  * Summarize code that you add
  */
 function draw() {
-    exclMark();
     diceButton();
-
 }
 
 function exclMark() {
@@ -34,12 +33,12 @@ function exclMark() {
 }
 
 function diceButton() {
-    fill(40, 180, 99);
+    fill(120, 100, 50);
     rect(270, 20, 100, 50);
 }
 
 function mousePressed() {
-    background(208, 211, 212);
+    background(195, 2, 83);
     if ((mouseX >= 270) && (mouseY >= 20)) {
         rollDice();
     }
@@ -51,7 +50,7 @@ function rollDice() {
         let ellipPositionX=33;
         for (var i = 1; i < rollDiceValue; i++) {
             ellipse(ellipPositionX, 250, 40, 40);
-            ellipPositionX= ellipPositionX + 33;
+            ellipPositionX= ellipPositionX + 60;
         }
 
     }
