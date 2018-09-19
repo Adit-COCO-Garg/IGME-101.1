@@ -28,8 +28,8 @@ function draw() {
 
 function exclMark() {
     textSize(200);
-    fill(255);
-    text("!", 170, 250);
+    fill("black");
+    text("!", 170, 260);
 }
 
 function diceButton() {
@@ -45,11 +45,11 @@ function mousePressed() {
 }
 
 function rollDice() {
-    int(rollDiceValue) = random(1, 6);
+    rollDiceValue = int(random(1, 6));
     print(rollDiceValue);
     fill((random(0, 255)), 100, 100);
-    let ellipPositionX = 33;
-    if (rollDiceValue===6){
+    let ellipPositionX = 40;
+    if (rollDiceValue === 6) {
         ellipse(ellipPositionX, 250, 40, 40);
         ellipPositionX = ellipPositionX + 60;
         ellipse(ellipPositionX, 250, 40, 40);
@@ -62,7 +62,7 @@ function rollDice() {
         ellipPositionX = ellipPositionX + 60;
         ellipse(ellipPositionX, 250, 40, 40);
         ellipPositionX = ellipPositionX + 60;
-    } else if (rollDiceValue===5){
+    } else if (rollDiceValue === 5) {
         ellipse(ellipPositionX, 250, 40, 40);
         ellipPositionX = ellipPositionX + 60;
         ellipse(ellipPositionX, 250, 40, 40);
@@ -73,8 +73,8 @@ function rollDice() {
         ellipPositionX = ellipPositionX + 60;
         ellipse(ellipPositionX, 250, 40, 40);
         ellipPositionX = ellipPositionX + 60;
-        
-    } else if (rollDiceValue===4){
+
+    } else if (rollDiceValue === 4) {
         ellipse(ellipPositionX, 250, 40, 40);
         ellipPositionX = ellipPositionX + 60;
         ellipse(ellipPositionX, 250, 40, 40);
@@ -83,24 +83,24 @@ function rollDice() {
         ellipPositionX = ellipPositionX + 60;
         ellipse(ellipPositionX, 250, 40, 40);
         ellipPositionX = ellipPositionX + 60;
-        
-    } else if (rollDiceValue===3){
+
+    } else if (rollDiceValue === 3) {
         ellipse(ellipPositionX, 250, 40, 40);
         ellipPositionX = ellipPositionX + 60;
         ellipse(ellipPositionX, 250, 40, 40);
         ellipPositionX = ellipPositionX + 60;
         ellipse(ellipPositionX, 250, 40, 40);
         ellipPositionX = ellipPositionX + 60;
-        
-    } else if (rollDiceValue===2){
+
+    } else if (rollDiceValue === 2) {
         ellipse(ellipPositionX, 250, 40, 40);
         ellipPositionX = ellipPositionX + 60;
         ellipse(ellipPositionX, 250, 40, 40);
         ellipPositionX = ellipPositionX + 60;
-        
+
     } else {
         ellipse(ellipPositionX, 250, 40, 40);
         ellipPositionX = ellipPositionX + 60;
-    } 
+    }
 
 }
