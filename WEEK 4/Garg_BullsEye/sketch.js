@@ -23,7 +23,7 @@ function draw() {
         fill(w);
         ellipse(mouseX, mouseY, w, w);
         print(mouseY);
-        w = w - 20;
+        w -= 20;
     }
     
 }
