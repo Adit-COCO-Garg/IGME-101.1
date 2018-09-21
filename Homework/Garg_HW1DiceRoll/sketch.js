@@ -28,8 +28,8 @@ function draw() {
 
 function exclMark() {
 	fill("black");
-	rect(180, 70, 40, 100); 
-	ellipse(200, 200, 40, 40);// The exclamation mark is horizontally and vertically centered on the screen.
+	rect(180, 100, 40, 100); 
+	ellipse(200, 240, 40, 40);// The exclamation mark is horizontally and vertically centered on the screen. The center of both 2 objects can be aligned o the canvas' center allowing it to be centered on the screen. 
 }
 
 function diceButton() { //The function to draw the dice button
