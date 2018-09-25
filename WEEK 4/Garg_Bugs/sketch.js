@@ -1,6 +1,6 @@
 /**
  * Adit Garg
- * IGME-101: Assignment Name, m/d/18
+ * IGME-101: Adit Garg, 09/21/18
  * Summarization of sketch activity
  */
 
@@ -8,7 +8,7 @@
 
 /**
  * setup : Initialization runs once; called automatically
- * Summarize code that you add
+ * This code iteratively prints rows and columns of bugs.
  */
 function setup() {
 	let legX, legY;
