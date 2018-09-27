@@ -9,7 +9,9 @@ var bg, face, a = 200;
 "use strict"; //catch some common coding errors
 function preload() {
 	bg = loadImage("https://www.dailydot.com/wp-content/uploads/97a/d8/246354a6d4005e451bffc5eb98c9b00a.jpg");
+	//taken from https://www.dailydot.com/wp-content/uploads/97a/d8/246354a6d4005e451bffc5eb98c9b00a.jpg
 	face = loadImage("Assets/smiley.png");
+	//taken from http://pngimage.net/lego-dimensions-png/
 }
 /**
  * setup : Initialization runs once; called automatically
@@ -30,6 +32,10 @@ function setup() {
 function drawBackdrop() {
 	createCanvas(1200, 600);
 	background(bg);
+	bullseye(200,100,500);
+	bullseye(100,900,300);
+	bullseye(200,900,500);
+	
 	sky();
 	//filter(GRAY);
 }
@@ -38,7 +44,7 @@ function drawBackdrop() {
 
 function sky() {
 	var i = 0;
-	while (i <= 10){
+	while (i <= 10) {
 		cloudX = 100, cloudY = 100;
 		cloud(cloudX, cloudY);
 		cloudX = random(100, 900), cloudy = random(80, 200);
@@ -55,6 +61,7 @@ function cloud() {
 	arc(cloudX + 25, cloudY, 200, 35, PI + TWO_PI, TWO_PI);
 	arc(cloudX + 45, cloudY, 130, 20, PI + TWO_PI, TWO_PI);
 }
+//taken from https://editor.p5js.org/jackiezen/sketches/rJEziNOR
 
 function city() {
 	buildings();
@@ -113,4 +120,13 @@ function flowerAc() {
 		ellipse(0, 5, 2, 15);
 		rotate(PI / 5);
 	}
+}
+
+function bullseye(maxDiam, positionX, positionY) {
+	while (maxDiam > 0) {
+		fill(maxDiam);
+		ellipse(positionX, positionY, maxDiam, maxDiam);
+		maxDiam -= 20;
+	}
+
 }
