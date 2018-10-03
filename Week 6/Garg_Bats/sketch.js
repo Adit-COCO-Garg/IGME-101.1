@@ -5,7 +5,7 @@
  */
 
 "use strict"; //catch some common coding errors
-var x, y, batHue, wingX, wingY, number, wingspan, moonDist; //declaring variables
+var x, y, batHue, wingX, wingY, batWidth, wingspan, moonDist; //declaring variables
 /**
  * setup : Initialization runs once; called automatically
  * Summarize code that you add
