@@ -63,7 +63,7 @@ function moon() {
 
 function mouseWithin(x,y) {
 	moonDist = int(dist(x, y, 1200, 100)); // distance of pointer from the moon's center
-	if (moonDist<=150){// checks if the pointer is within the moon/ circle.
+	if (moonDist<=75){// checks if the pointer is within the moon/ circle.
 		print("moon");
 	}
 }
