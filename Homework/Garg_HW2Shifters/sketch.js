@@ -6,7 +6,7 @@
 
 "use strict"; //catch some common coding errors
 //global variables Declared
-var phaseBall1, phaseBall2, xPosBall1, xPosBall2, yPosBall1, yPosBall2, xSpeedBall1, xSpeedBall2, ySpeedBall1, ySpeedBall2, diamBall1, diamBall2, ballDist, x2, y2,diam,phase,cordX,cordY,tempCordX,tempCordY;
+var phaseBall1, phaseBall2, xPosBall1, xPosBall2, yPosBall1, yPosBall2, xSpeedBall1, xSpeedBall2, ySpeedBall1, ySpeedBall2, diamBall1, diamBall2, ballDist, x2, y2, diam, phase, cordX, cordY, tempCordX, tempCordY, speedX, speedY;
 
 /**
  * setup : Initialization runs once; called automatically
@@ -52,7 +52,6 @@ function draw() {
 	if (phaseBall1 === phaseBall2) {
 		confetti();
 	}
-
 	drawballs();
 	moveballs();
 }
@@ -64,12 +63,16 @@ function mouseClicked() {
 		ballClicked;
 
 	if (mouseWithin(x, y, xPosBall1, yPosBall1, diamBall1)) {
+		speedX = xSpeedBall1;
+		speedY = ySpeedBall1;
 		changePhase(phaseBall1);
 		phaseBall1 = phase;
 		ballClicked = 1;
 	}
 
 	if (mouseWithin(x, y, xPosBall2, yPosBall2, diamBall2)) {
+		speedX = xSpeedBall2;
+		speedY = xSpeedBall2;
 		changePhase(phaseBall2);
 		phaseBall2 = phase;
 		ballClicked = 2;
@@ -93,85 +96,6 @@ function changePhase() {
 	}
 	return phase;
 	print("Two " + phase);
-}
-
-function drawShape(x, y) {
-	if (phase === 0) {
-		click1();
-	} else if (phase === 1) {
-		click2();
-
-	} else if (phase === 2) {
-		click3();
-
-	} else if (phase === 3) {
-		click4()
-
-	} else if (phase === 4) {
-		click5();
-	}
-}
-
-
-function click1() {
-	fill(random(0, 360));
-	while (lineY < 600) {
-		if (ballClicked === 1) {
-			ellipse(xPosBall1, lineY, 10, 10);
-		}
-		if (ballClicked === 2) {
-			ellipse(xPosBall2, lineY, 10, 10);
-		}
-	}
-	if ((yPosBall1 === 600) || (yPosBall2 = 600)) {
-		y = 0; //wrap to top
-	}
-	y--; // move the ball
-}
-
-function click2() {
-	fill(random(0, 360));
-	if (ballClicked === 1) {
-		maxCord = diamBall1 + yPosBall1;
-		diam = diamBall1;
-
-		cordX = diamBall1 - xPosBall1;
-		speedX = xSpeedBall1;
-
-		cordY = diamBall1 - yPosBall1;
-		speedY = ySpeedBall1;
-
-	} else {
-		maxCord = diamBall1 + xPosBall1;
-		diam = diamBall2
-
-		cordX = diamBall2 - xPosBall2;
-		speedX = xSpeedBall2;
-
-		cordY = diamBall2 - yPosBall2;
-		speedY = ySpeedBall2;
-	}
-	//Draws grid
-	while (cordX < maxCord) {
-		while (cordY < gridlimit) {
-			ellipse(cordX, cordY, 10, 10);
-			cordY += 10;
-		}
-		cordX += 10;
-	}
-}
-
-function click3() {
-	fill(random(0, 360));
-
-}
-
-function click4() {
-
-}
-
-function click5() {
-
 }
 
 function confetti() {
@@ -203,7 +127,37 @@ function drawballs() {
 }
 
 function moveballs() {
-	
+	if (phase == 1) {
+		fill(random(0, 360));
+		cordY = wrap(null, cordY, abs(speedX), null, height, diam);
+		if (ballClicked === 1) {
+			ellipse(xPosBall1, cordY, 10, 10);
+		}
+		if (ballClicked === 2) {
+			ellipse(xPosBall2, cordY, 10, 10);
+		}
+
+	}
+	if (phase == 2) {
+		cordX = wriggle(cordX, null, 600, diam);
+		cordY = wriggle(null, cordY, 600, diam);
+	}
+	if (phase == 3) {
+		cordX += speedX;
+		if ((cordX >= (600 - (diam / 2))) || (cordX <= (600 - (diam / 2)))) {
+			speedX *= -1;
+		}
+		cordY += speedY;
+		if ((cordY >= (600 - (diam / 2))) || (cordY <= (600 - (diam / 2)))) {
+			speedY *= -1;
+		}
+
+	}
+	if (phase == 4) {
+		//RANDOM
+	}
+
+
 }
 
 function wriggle(cordX, cordY, maxCord, diam) {
@@ -242,4 +196,84 @@ function accentPhase(cordX, cordY, phase) {
 }
 
 
+//function drawShape(x, y) {
+//	if (phase === 0) {
+//		click1();
+//	} else if (phase === 1) {
+//		click2();
+//
+//	} else if (phase === 2) {
+//		click3();
+//
+//	} else if (phase === 3) {
+//		click4()
+//
+//	} else if (phase === 4) {
+//		click5();
+//	}
+//}
+
+
+
+
 //--------
+//function click1() {
+//	fill(random(0, 360));
+//	while (lineY < 600) {
+//		if (ballClicked === 1) {
+//			ellipse(xPosBall1, lineY, 10, 10);
+//		}
+//		if (ballClicked === 2) {
+//			ellipse(xPosBall2, lineY, 10, 10);
+//		}
+//	}
+//	if ((yPosBall1 === 600) || (yPosBall2 = 600)) {
+//		y = 0; //wrap to top
+//	}
+//	y--; // move the ball
+//}
+//
+//function click2() {
+//	fill(random(0, 360));
+//	if (ballClicked === 1) {
+//		maxCord = diamBall1 + yPosBall1;
+//		diam = diamBall1;
+//
+//		cordX = diamBall1 - xPosBall1;
+//		speedX = xSpeedBall1;
+//
+//		cordY = diamBall1 - yPosBall1;
+//		speedY = ySpeedBall1;
+//
+//	} else {
+//		maxCord = diamBall1 + xPosBall1;
+//		diam = diamBall2
+//
+//		cordX = diamBall2 - xPosBall2;
+//		speedX = xSpeedBall2;
+//
+//		cordY = diamBall2 - yPosBall2;
+//		speedY = ySpeedBall2;
+//	}
+//	//Draws grid
+//	while (cordX < maxCord) {
+//		while (cordY < gridlimit) {
+//			ellipse(cordX, cordY, 10, 10);
+//			cordY += 10;
+//		}
+//		cordX += 10;
+//	}
+//}
+//
+//function click3() {
+//	fill(random(0, 360));
+//
+//}
+//
+//function click4() {
+//
+//}
+//
+//function click5() {
+//
+//}
