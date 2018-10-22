@@ -11,11 +11,8 @@ https://p5js.org/examples/simulate-brownian-motion.html
 
 "use strict"; //catch some common coding errors
 //global variables Declared
-var phaseBall1, phaseBall2, xPosBall1, xPosBall2, yPosBall1, yPosBall2, xSpeedBall1, xSpeedBall2, ySpeedBall1, ySpeedBall2, diamBall1, diamBall2, ballDist, phase, changeCord, tempCord, init, num = 200,
-	val, range = 6,
-	ax = [],
-	ay = [],
-	shifter;
+var phaseBall1, phaseBall2, xPosBall1, xPosBall2, yPosBall1, yPosBall2, xSpeedBall1, xSpeedBall2, ySpeedBall1, ySpeedBall2, diamBall1, diamBall2, ballDist, phase, changeCord, tempCord, init1,init2, num = 200,
+	val, range = 6,ax1=[],ay1=[],ax2=[],ay2=[],shifter;
 
 
 
@@ -89,10 +86,10 @@ function accentPhase(cordX, cordY, phase) { //based on the parameters given call
 
 	} else if (phase === 4) {
 		/*
-		CODE FOR BROWNINAN MOTION TAKEN FROM 
+		CODE FOR BROWNINAN MOTION TAKEN/ ADAPTED FROM 
 		https://p5js.org/examples/simulate-brownian-motion.html
 		*/
-		print("BROWNIAN MOTION!! YAY! Warning: Epilepsy"); //draw text at mouse loaction and if phases are same EXTRA SHIBE POWER!
+		print("BROWNIAN MOTION!! YAY! Warning: Epilepsy (MIGHT CAUSE EPILEPSY!)"); //draw text at mouse loaction and if phases are same EXTRA SHIBE POWER! (following code is mine)
 		for (let i = 0; i < 3; i++) {
 			let g = mouseX;
 			let h = mouseY;
@@ -145,44 +142,42 @@ function moveballs() {
 		}
 	}
 	/*
-	CODE FOR BROWNINAN MOTION TAKEN FROM 
+	CODE FOR BROWNINAN MOTION TAKEN/ ADAPTED FROM 
 	https://p5js.org/examples/simulate-brownian-motion.html
 	*/
 	if (phaseBall1 === 4) { //brownian motion
-		if (init != 1) { // this if condition acts as a setup function as it only gets called once!
-
-			for (var i = 0; i < num; i++) { //initializes array variables
-				ax[i] = width / 2;
-				ay[i] = height / 2;
-				init = 1;
+		if (init1 != 1) { // this if condition acts as a setup function as it only gets called once! I made this!
+			for (let i = 0; i < num; i++) { //initializes array variables. Taken from the example
+				ax1[i] = xPosBall1;//This is mine
+				ay1[i] = yPosBall1;//This is mine
+				print("this set1 runs");
+				init1 = 1;
 			}
-			frameRate(30); //framerate locked to 30
+			frameRate(60); //framerate locked to 30. This is mine
 		}
 		// Shift all elements 1 place to the left
-		for (var i = 1; i < num; i++) {
-			ax[i - 1] = ax[i];
-			ay[i - 1] = ay[i];
+		for (let i = 1; i < num; i++) {//Taken from the example
+			ax1[i - 1] = ax1[i];//This is mine
+			ay1[i - 1] = ay1[i];//This is mine
 		}
 
 		// Put a new value at the end of the array
-		ax[num - 1] += random(-range, range);
-		ay[num - 1] += random(-range, range);
+		ax1[num - 1] += random(-range, range);//This is mine
+		ay1[num - 1] += random(-range, range);//This is mine
 
 		// Constrain all points to the screen
-		ax[num - 1] = constrain(ax[num - 1], 0, width);
-		ay[num - 1] = constrain(ay[num - 1], 0, height);
+		ax1[num - 1] = constrain(ax1[num - 1], diamBall1, width-diamBall1);//This is mine
+		ay1[num - 1] = constrain(ay1[num - 1], diamBall2, height-diamBall1);//This is mine
 
 		// Draw a line connecting the points
-		for (var j = 1; j < num; j++) {
-			xPosBall1 = ax[j];
-			yPosBall1 = ay[j];
-			val = j / num * 204.0 + 51; //make the tail of the motion fade out
-			stroke(val);
-			line(ax[j - 1], ay[j - 1], ax[j], ay[j]);
-			noStroke();
+		for (let j = 1; j < num; j++) {//Taken from the example
+			xPosBall1 = ax1[j];//This is mine
+			yPosBall1 = ay1[j];//This is mine
+			val = j / num * 204.0 + 51; //make the tail of the motion fade out 
+			stroke(val);//Taken from the example
+			line(ax1[j - 1], ay1[j - 1], ax1[j], ay1[j]);//This is mine
+			noStroke();//This is mine
 		}
-
-
 	}
 
 
@@ -206,47 +201,46 @@ function moveballs() {
 		}
 	}
 	/*
-	CODE FOR BROWNINAN MOTION TAKEN FROM 
+	CODE FOR BROWNINAN MOTION TAKEN/ ADAPTED FROM 
 	https://p5js.org/examples/simulate-brownian-motion.html
 	*/
 	if (phaseBall2 === 4) { //brownian motion
-		if (init != 1) { // this if condition acts as a setup function as it only gets called once!
-
-			for (var i = 0; i < num; i++) { //initializing array viarbles
-				ax[i] = width / 2;
-				ay[i] = height / 2;
-				init = 1;
+		if (init2 != 1) { // this if condition acts as a setup function as it only gets called once!
+			for (let i = 0; i < num; i++) { //initializing array viarbles This is mine
+				ax2[i] = xPosBall2;//This is mine
+				ay2[i] = yPosBall2;//This is mine
+				init2 = 1;//This is mine
 			}
-			frameRate(30);
+			frameRate(60);//This is mine
 		}
 		// Shift all elements 1 place to the left
-		for (var i = 1; i < num; i++) {
-			ax[i - 1] = ax[i];
-			ay[i - 1] = ay[i];
+		for (let i = 1; i < num; i++) {//Taken from the example
+			ax2[i - 1] = ax2[i];//This is mine
+			ay2[i - 1] = ay2[i];//This is mine
 		}
 
 		// Put a new value at the end of the array
-		ax[num - 1] += random(-range, range);
-		ay[num - 1] += random(-range, range);
+		ax2[num - 1] += random(-range, range);//This is mine
+		ay2[num - 1] += random(-range, range);//This is mine
 
 		// Constrain all points to the screen
-		ax[num - 1] = constrain(ax[num - 1], 0, width);
-		ay[num - 1] = constrain(ay[num - 1], 0, height);
+		ax2[num - 1] = constrain(ax2[num - 1], diamBall2, width-diamBall2);//This is mine
+		ay2[num - 1] = constrain(ay2[num - 1], diamBall2, height-diamBall2);//This is mine
 
 		// Draw a line connecting the points
 		// Draw a line connecting the points
-		if (phaseBall1 === 4) {
-			shifter = diamBall1; // if both phases are in phase 4 space out both the circles to prevent overlapping
-		} else {
-			shifter = 0;
-		}
-		for (var j = 1; j < num; j++) {
-			xPosBall2 = ax[j] + shifter;
-			yPosBall2 = ay[j] + shifter;
+//		if (phaseBall1 === 4) {//This is mine
+//			shifter = diamBall1; // if both phases are in phase 4 space out both the circles to prevent overlapping. This is mine
+//		} else {
+//			shifter = 0;//This is mine
+//		}
+		for (let j = 1; j < num; j++) {
+			xPosBall2 = ax2[j];//This is mine
+			yPosBall2 = ay2[j];//This is mine
 			val = j / num * 204.0 + 51; //make the tail of the motion fade out
-			stroke(val);
-			line(ax[j - 1] + shifter, ay[j - 1] + shifter, ax[j] + shifter, ay[j] + shifter);
-			noStroke();
+			stroke(val);//Taken from the example
+			line(ax2[j - 1], ay2[j - 1], ax2[j], ay2[j]);//This is mine
+			noStroke();//This is mine
 		}
 
 
