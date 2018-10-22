@@ -1,19 +1,262 @@
 /**
  * Adit Garg
- * IGME-101: HW2 Shifters, m/d/18
- * Summarization of sketch activity
+ * IGME-101: HW2 Shifters, 10/20/18
+ * In this activity using phase shifters we create different varried motions for each object within the scene with it's own accent, and upon mouseclick within an object change it's phase.
  */
+
+/*
+CODE FOR BROWNINAN MOTION TAKEN FROM 
+https://p5js.org/examples/simulate-brownian-motion.html
+*/
 
 "use strict"; //catch some common coding errors
 //global variables Declared
-var phaseBall1, phaseBall2, xPosBall1, xPosBall2, yPosBall1, yPosBall2, xSpeedBall1, xSpeedBall2, ySpeedBall1, ySpeedBall2, diamBall1, diamBall2, ballDist, x2, y2, diam, phase, cordX, cordY, tempCordX, tempCordY, speedX, speedY;
+var phaseBall1, phaseBall2, xPosBall1, xPosBall2, yPosBall1, yPosBall2, xSpeedBall1, xSpeedBall2, ySpeedBall1, ySpeedBall2, diamBall1, diamBall2, ballDist, phase, changeCord, tempCord, init, num = 200,
+	val, range = 6,
+	ax = [],
+	ay = [],
+	shifter;
 
+
+
+//Custom functions
+
+function confetti() {
+	for (let i = 0; i < 100; i++) {
+		fill(random(0, 360), 100, 100); // random hue between 0 and 360
+		ellipse(random(3, 597), random(3, 597), 3, 3); // 100 3px circles at random x,y location
+	}
+}
+
+function mouseWithin(x2, y2, diam) {
+	//x2 y2 ball x and ball y
+	ballDist = dist(mouseX, mouseY, x2, y2); // distance of pointer from the ball's center
+	if (ballDist <= (diam / 2)) { // checks if the pointer is within the ball.
+		return true;
+	} else {
+		return false;
+	}
+}
+
+function changePhase(phase) {
+	phase++; //increases phase to next phase
+	if (phase > 4) {
+		phase = 0; //if current phase is 4 and changephase is called set phase to 0
+	}
+	return phase;
+}
+
+function wrap(changeCord, changeSpeed, maxCord, diam) {
+	if (changeCord >= (maxCord + (diam / 2))) { // if the cordinate being changed is out of bounds
+		changeCord = (-diam / 2); // Then wrap changeCord back to the top accounting for radius
+	}
+	changeCord = changeCord + changeSpeed; //increase the cordinate value by change speed
+	return changeCord;
+}
+
+function wriggle(changeCord, maxCord, diam) {
+	tempCord = changeCord + random(-1.5, 1.5); // sets a temporary cordinate variable
+	if ((tempCord < (maxCord - diam)) || (tempCord > (maxCord + diam))) { //tests if the temp coordinate variable will be within bounds
+		changeCord = tempCord; // if temoorary coordinate is within bounds then  apply it to change cord 
+	}
+
+	return changeCord;
+}
+
+
+
+function accentPhase(cordX, cordY, phase) { //based on the parameters given call the following accents for each parameter
+	if (phase === 1) {
+		for (let i = 8; i < 592; i += 30) {
+			ellipse(cordX, i, 4, 8); //draw ellipses at the x cordinate of the ball from top to bottom of the canvas
+		}
+
+	} else if (phase === 2) {
+		let posX = cordX - 60;
+		for (let i = 0; i <= 6; i++) {
+			let posY = cordY - 60;
+			for (let j = 0; j <= 6; j++) {
+				ellipse(posX, posY, 4, 4); //draw a grid of ellipses with circle's center being the grid's center
+				posY = posY + 20;
+			}
+			posX = posX + 20;
+		}
+
+	} else if (phase === 3) {
+		for (let i = 0; i <= 600; i += 10) {
+			ellipse(i, cordY, 4, 4); // draw a horizontal line of ellipses acroos the canvas where y cordinate is dependant on the ball's y cordinate
+		}
+
+	} else if (phase === 4) {
+		/*
+		CODE FOR BROWNINAN MOTION TAKEN FROM 
+		https://p5js.org/examples/simulate-brownian-motion.html
+		*/
+		print("BROWNIAN MOTION!! YAY! Warning: Epilepsy"); //draw text at mouse loaction and if phases are same EXTRA SHIBE POWER!
+		for (let i = 0; i < 3; i++) {
+			let g = mouseX;
+			let h = mouseY;
+			fill(random(0, 360), 100, 100);
+			text("SUCH BROWNIAN MOTION", g, h);
+			fill(random(0, 360), 100, 100);
+			text("MUCH PHYSICS", g, h + 20);
+			fill(random(0, 360), 100, 100);
+			text("VERY WOW", g, h + 40);
+			if (phaseBall1 === phaseBall2) {
+				textStyle(BOLD);
+				text("EXTRA SHIBE POWER!!", 300, 300);
+				textStyle(NORMAL);
+			}
+		}
+	}
+}
+
+function drawballs() {
+	fill((diamBall1 + (phaseBall1 * 60)), 100, 100); //random hue for ball1
+	accentPhase(xPosBall1, yPosBall1, phaseBall1);
+	ellipse(xPosBall1, yPosBall1, diamBall1, diamBall1);
+	fill("black");
+	text("1", xPosBall1, yPosBall1);
+
+	fill((diamBall2 + (phaseBall2 * 60)), 100, 100); //random hue for ball2
+	accentPhase(xPosBall2, yPosBall2, phaseBall2);
+	ellipse(xPosBall2, yPosBall2, diamBall2, diamBall2);
+	fill("black");
+	text("2", xPosBall2, yPosBall2);
+
+}
+
+function moveballs() {
+	if (phaseBall1 === 1) {
+		yPosBall1 = wrap(yPosBall1, (abs(xSpeedBall1)), height, diamBall1); //make ball 1 fall and wrap
+	}
+	if (phaseBall1 === 2) {
+		xPosBall1 = wriggle(xPosBall1, width, diamBall1); //make the grid and ball1 wriggle
+		yPosBall1 = wriggle(yPosBall1, height, diamBall1); //make the grid and ball1 wriggle
+	}
+	if (phaseBall1 === 3) { // make the ball bounce by changing direction whenever ball 1 touches the border
+		xPosBall1 = xPosBall1 + xSpeedBall1;
+		if ((xPosBall1 <= (diamBall1 / 2)) || (xPosBall1 >= (600 - (diamBall1 / 2)))) {
+			xSpeedBall1 = -xSpeedBall1;
+		}
+		yPosBall1 = yPosBall1 + ySpeedBall1;
+		if ((yPosBall1 <= (diamBall1 / 2)) || (yPosBall1 >= (600 - (diamBall1 / 2)))) {
+			ySpeedBall1 = -ySpeedBall1;
+		}
+	}
+	/*
+	CODE FOR BROWNINAN MOTION TAKEN FROM 
+	https://p5js.org/examples/simulate-brownian-motion.html
+	*/
+	if (phaseBall1 === 4) { //brownian motion
+		if (init != 1) { // this if condition acts as a setup function as it only gets called once!
+
+			for (var i = 0; i < num; i++) { //initializes array variables
+				ax[i] = width / 2;
+				ay[i] = height / 2;
+				init = 1;
+			}
+			frameRate(30); //framerate locked to 30
+		}
+		// Shift all elements 1 place to the left
+		for (var i = 1; i < num; i++) {
+			ax[i - 1] = ax[i];
+			ay[i - 1] = ay[i];
+		}
+
+		// Put a new value at the end of the array
+		ax[num - 1] += random(-range, range);
+		ay[num - 1] += random(-range, range);
+
+		// Constrain all points to the screen
+		ax[num - 1] = constrain(ax[num - 1], 0, width);
+		ay[num - 1] = constrain(ay[num - 1], 0, height);
+
+		// Draw a line connecting the points
+		for (var j = 1; j < num; j++) {
+			xPosBall1 = ax[j];
+			yPosBall1 = ay[j];
+			val = j / num * 204.0 + 51; //make the tail of the motion fade out
+			stroke(val);
+			line(ax[j - 1], ay[j - 1], ax[j], ay[j]);
+			noStroke();
+		}
+
+
+	}
+
+
+
+	if (phaseBall2 === 1) {
+		yPosBall2 = wrap(yPosBall2, (abs(xSpeedBall2)), height, diamBall2); //make ball 2 fall and wrap
+	}
+
+	if (phaseBall2 === 2) {
+		xPosBall2 = wriggle(xPosBall2, width, diamBall2); //make the grid and ball1 wriggle
+		yPosBall2 = wriggle(yPosBall2, height, diamBall2); //make the grid and ball1 wriggle
+	}
+	if (phaseBall2 === 3) { // make the ball bounce by changing direction whenever ball 2 touches the border
+		xPosBall2 = xPosBall2 + xSpeedBall2;
+		if ((xPosBall2 <= (diamBall2 / 2)) || (xPosBall2 >= (600 - (diamBall2 / 2)))) {
+			xSpeedBall2 = -xSpeedBall2;
+		}
+		yPosBall2 = yPosBall2 + ySpeedBall2;
+		if ((yPosBall2 <= (diamBall2 / 2)) || (yPosBall2 >= (600 - (diamBall2 / 2)))) {
+			ySpeedBall2 = -ySpeedBall2;
+		}
+	}
+	/*
+	CODE FOR BROWNINAN MOTION TAKEN FROM 
+	https://p5js.org/examples/simulate-brownian-motion.html
+	*/
+	if (phaseBall2 === 4) { //brownian motion
+		if (init != 1) { // this if condition acts as a setup function as it only gets called once!
+
+			for (var i = 0; i < num; i++) { //initializing array viarbles
+				ax[i] = width / 2;
+				ay[i] = height / 2;
+				init = 1;
+			}
+			frameRate(30);
+		}
+		// Shift all elements 1 place to the left
+		for (var i = 1; i < num; i++) {
+			ax[i - 1] = ax[i];
+			ay[i - 1] = ay[i];
+		}
+
+		// Put a new value at the end of the array
+		ax[num - 1] += random(-range, range);
+		ay[num - 1] += random(-range, range);
+
+		// Constrain all points to the screen
+		ax[num - 1] = constrain(ax[num - 1], 0, width);
+		ay[num - 1] = constrain(ay[num - 1], 0, height);
+
+		// Draw a line connecting the points
+		// Draw a line connecting the points
+		if (phaseBall1 === 4) {
+			shifter = diamBall1; // if both phases are in phase 4 space out both the circles to prevent overlapping
+		} else {
+			shifter = 0;
+		}
+		for (var j = 1; j < num; j++) {
+			xPosBall2 = ax[j] + shifter;
+			yPosBall2 = ay[j] + shifter;
+			val = j / num * 204.0 + 51; //make the tail of the motion fade out
+			stroke(val);
+			line(ax[j - 1] + shifter, ay[j - 1] + shifter, ax[j] + shifter, ay[j] + shifter);
+			noStroke();
+		}
+
+
+
+	}
+}
 /**
  * setup : Initialization runs once; called automatically
- * Summarize code that you add
+ * The setup funcction initializes canvas, colormode, no stroke, and text align values along with each ball's position, speed, diameter, and phase value.
  */
-
-
 function setup() {
 	//Canvas setup
 	createCanvas(600, 600); //canvas 600x600
@@ -40,17 +283,20 @@ function setup() {
 
 	ySpeedBall1 = random(0.8, 2.5);
 	ySpeedBall2 = random(0.8, 2.5);
+
+	phaseBall1 = 0;
+	phaseBall2 = 0;
 	//--------
 }
 
 /**
  * draw : Periodically called automatically
- * Summarize code that you add
+ * Here the draw function calls background- which clears the previous frame. Further, confetti is called along with drawballs and moveballs functions are called.
  */
 function draw() {
 	background(195, 2, 83); //Light gray background
 	if (phaseBall1 === phaseBall2) {
-		confetti();
+		confetti(); //draws confetti when phases are equal
 	}
 	drawballs();
 	moveballs();
@@ -58,144 +304,23 @@ function draw() {
 
 //Event Handlers
 function mouseClicked() {
-	var x = mouseX,
-		y = mouseY,
-		ballClicked;
 
-	if (mouseWithin(x, y, xPosBall1, yPosBall1, diamBall1)) {
-		speedX = xSpeedBall1;
-		speedY = ySpeedBall1;
-		changePhase(phaseBall1);
-		phaseBall1 = phase;
-		ballClicked = 1;
+	if (mouseWithin(xPosBall1, yPosBall1, diamBall1)) { //if mouse click is within ball 1 do the following
+		phaseBall1 = changePhase(phaseBall1); // change phase based on previous phase of ball 1
+		print("One " + phaseBall1);
 	}
 
-	if (mouseWithin(x, y, xPosBall2, yPosBall2, diamBall2)) {
-		speedX = xSpeedBall2;
-		speedY = xSpeedBall2;
-		changePhase(phaseBall2);
-		phaseBall2 = phase;
-		ballClicked = 2;
+	if (mouseWithin(xPosBall2, yPosBall2, diamBall2)) { // if mouse click is within ball 2 do the follwoing
+		phaseBall2 = changePhase(phaseBall2); // change phase based on previous phase of ball 2
+		print("Two " + phaseBall2);
+
 	}
 
-}
-
-function mouseWithin(x, y, x2, y2) {
-	ballDist = dist(x, y, x2, y2); // distance of pointer from the moon's center
-	if (ballDist <= diamBall1) { // checks if the pointer is within the ball.
-		return true;
-	}
 }
 //--------
 
-//Custom functions
-function changePhase() {
-	phase++;
-	if ((phaseBall1 > 4) || (phaseBall2 > 4)) {
-		phase = 0;
-	}
-	return phase;
-	print("Two " + phase);
-}
 
-function confetti() {
-	for (let i = 0; i < 100; i++) {
-		ellipse(random(3, 597), random(3, 597), 3, 3);
-	}
-}
-
-function wrap(cordX, cordY, speedX, speedY, maxCord, diam) {
-	if (cordX >= (600 + diam / 2)) {
-		cordX = -diam / 2;
-	}
-	if (cordY >= (600 + diam / 2)) {
-		cordY = -diam / 2;
-	}
-	cordX += speedX;
-	cordY += speedY;
-	return cordX, cordY;
-}
-
-function drawballs() {
-	fill((diam + (phase * 60)), 100, 100);
-	accentPhase(cordX, cordY, phase);
-	ellipse(xPosBall1, yPosBall1, diamBall1, diamBall1);
-	text("1", xPosBall1, yPosBall1);
-	ellipse(xPosBall2, yPosBall2, diamBall2, diamBall2);
-	text("2", xPosBall2, yPosBall2);
-	fill("black");
-}
-
-function moveballs() {
-	if (phase == 1) {
-		fill(random(0, 360));
-		cordY = wrap(null, cordY, abs(speedX), null, height, diam);
-		if (ballClicked === 1) {
-			ellipse(xPosBall1, cordY, 10, 10);
-		}
-		if (ballClicked === 2) {
-			ellipse(xPosBall2, cordY, 10, 10);
-		}
-
-	}
-	if (phase == 2) {
-		cordX = wriggle(cordX, null, 600, diam);
-		cordY = wriggle(null, cordY, 600, diam);
-	}
-	if (phase == 3) {
-		cordX += speedX;
-		if ((cordX >= (600 - (diam / 2))) || (cordX <= (600 - (diam / 2)))) {
-			speedX *= -1;
-		}
-		cordY += speedY;
-		if ((cordY >= (600 - (diam / 2))) || (cordY <= (600 - (diam / 2)))) {
-			speedY *= -1;
-		}
-
-	}
-	if (phase == 4) {
-		//RANDOM
-	}
-
-
-}
-
-function wriggle(cordX, cordY, maxCord, diam) {
-	tempCordX = cordX + random(-1.5, 1.5);
-	if ((tempCordX < (600 - diam)) || (tempCordX > (600 + diam))) {
-		cordX = tempCordX;
-	}
-	tempCordY = cordY + random(-1.5, 1.5);
-	if ((tempCordY < (600 - diam)) || (tempCordY > (600 + diam))) {
-		cordY = tempCordY;
-	}
-	return cordX, cordY;
-}
-
-function accentPhase(cordX, cordY, phase) {
-	if (phase === 1) {
-		for (i = 30; i < 130; i += 30) {
-			ellipse(cordX, i, 8, 8);
-		}
-
-	} else if (phase === 2) {
-		for (i = (cordX - 60); i <= 120; i += 20) {
-			for (j = (cordY - 60); i <= 120; i += 20) {
-				ellipse(i, j, 4, 4);
-			}
-		}
-
-	} else if (phase === 3) {
-		for (i = 0; i <= 600; i += 10) {
-			ellipse(i, cordY, 4, 4);
-		}
-
-	} else if (phase === 4) {
-		//random shit
-	}
-}
-
-
+//Rough Code
 //function drawShape(x, y) {
 //	if (phase === 0) {
 //		click1();
@@ -213,7 +338,22 @@ function accentPhase(cordX, cordY, phase) {
 //	}
 //}
 
-
+//function grav(){
+//			// Make balls fall with gravity
+//		//mousex x displacement
+//		//y grav displacement
+//		counter=0, 
+//		while (kill!=true)
+//		displacementball=switcherGrav((counter^2)*2.5); //1/2 at^2 (ut =0)
+//		if (xPosBall1===diamBall1/2){
+//			switcherGrav=-1;
+//		} else{
+//			switcherGrav=1;
+//		}
+//		
+//		counter=counter+.25;
+//		
+//}
 
 
 //--------
