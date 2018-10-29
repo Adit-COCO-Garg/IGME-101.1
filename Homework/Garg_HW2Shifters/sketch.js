@@ -89,7 +89,7 @@ function accentPhase(cordX, cordY, phase) { //based on the parameters given call
 		CODE FOR BROWNINAN MOTION TAKEN/ ADAPTED FROM 
 		https://p5js.org/examples/simulate-brownian-motion.html
 		*/
-		print("BROWNIAN MOTION!! YAY! Warning: Epilepsy (MIGHT CAUSE EPILEPSY!)"); //draw text at mouse loaction and if phases are same EXTRA SHIBE POWER! (following code is mine)
+		print("BROWNIAN MOTION!! YAY! Warning: Epilepsy (MIGHT CAUSE EPILEPSY!)"); //draw text at mouse loaction and if phases are same EXTRA SHIBE POWER!
 		for (let i = 0; i < 3; i++) {
 			let g = mouseX;
 			let h = mouseY;
