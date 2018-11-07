@@ -5,21 +5,20 @@
  */
 
 "use strict"; //catch some common coding errors
+
+var oak1;
 /**
  * setup : Initialization runs once; called automatically
  * Summarize code that you add
  */
-
-// FARCE
-
 function setup() {
+	createCanvas(1000,1000);
+	print(oak1);
+	//Oask1's undefined
+	oak1 = new Tree();
+	print(oak1);
+	//Oak1's now defined as an object of class tree
 
-	//Canvas setup
-	createCanvas(1000, 1000); //canvas 1000x1000
-	colorMode(HSB, 360, 100, 100); //color mode set to HSB
-	background(195, 2, 83); //light gray background
-	//--------
-	
 }
 
 /**
@@ -27,6 +26,5 @@ function setup() {
  * Summarize code that you add
  */
 function draw() {
-	
 
 }
