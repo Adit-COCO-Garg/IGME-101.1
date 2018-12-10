@@ -19,7 +19,7 @@ class GCell {
         this.control.position(this.x + 620, this.y + 120);
         this.filler = hueVal;
         this.a = this.x + random(-10, 10);
-        this.b = this.y + random(-10, 10);;
+        this.b = this.y + random(-10, 10);
         this.aSpeed = 1
         this.bspeed = 1
    
@@ -34,25 +34,18 @@ class GCell {
         rectMode(CENTER)
         rect(this.x, this.y, 90, 90);
 
-
-     print(this.y)
-        print(this.b)
-
-
-        var val = this.control.value()
-
-        if (this.a >= this.x + 50) {
-            this.aSpeed = -val
-        }
-        if (this.a <= this.x - 50) {
-            this.aSpeed = val
-        }
-        if (this.b >= this.y + 50) {
-            this.bSpeed = -val
-        }
-        if (this.by <= this.y - 50) {
-            this.bSpeed = val
-        }
+//        if (this.a >= this.x + 50) {
+//            this.aSpeed = -val
+//        }
+//        if (this.a <= this.x - 50) {
+//            this.aSpeed = val
+//        }
+//        if (this.b >= this.y + 50) {
+//            this.bSpeed = -val
+//        }
+//        if (this.by <= this.y - 50) {
+//            this.bSpeed = val
+//        }
 
         fill("white")
         ellipseMode(CENTER)

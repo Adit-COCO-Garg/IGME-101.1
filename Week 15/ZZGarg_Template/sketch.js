@@ -1,3 +1,4 @@
+
 /**
  * Adit Garg
  * IGME-101: Assignment Name, m/d/18
@@ -10,8 +11,7 @@
 let slider1; //slider
 let slider2; //slider
 let gcells = [];
-let aS = 1,
-    bS = 1; //array of GCell objects
+ //array of GCell objects
 
 
 /**
@@ -59,7 +59,7 @@ function objectMaker() {
         //add finished inner array to gcells
         gcells.push(innerA);
     }
-    objectDisplay()
+    objectDisplay();
 }
 
 function objectDisplay() {
