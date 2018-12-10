@@ -40,7 +40,7 @@ function canvasCreator() {
     canvas.style("z-index", "-1"); //due to the variable's versatility the DOM library allows to define the hirearchy of view/ z index (a css property)
     canvas.style("margin", "20px");
     colorMode(HSB, 360, 100, 100); //color mode set to HSB
-    rectMode(CENTER)
+    rectMode(CENTER);
     //--------
 }
 
