@@ -36,7 +36,7 @@ class collector2 {
         }
 
     }
-    phaseDisplay() { //draws image based on transition's state
+    phaseDisplay() { // draws image and text based on transition's state
         fill("black");
         if (this.phase === "walkL") {
             text("walkL", this.a, this.b+60);
