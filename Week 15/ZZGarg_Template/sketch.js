@@ -52,7 +52,7 @@ function objectMaker() {
         for (let c = 0; c < 6; c++) {
             let x = 57 + c * 97;
             let y = 56 + r * 95;
-            innerA.push(new GCell(x, y, "NAME", random(0, 360)));
+            innerA.push(new GCell(x, y, "NAME"));
         }
         //force line break between rows of controls
         createElement("br"); //line break tag

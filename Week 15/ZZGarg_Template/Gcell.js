@@ -10,18 +10,21 @@ class GCell {
 	 * @param y - number, y-coord value
 	 * @param name - string, cell label
 	 */
-	constructor(x, y, name, hueVal) {
+	constructor(x, y, name) {
 		this.x = x;
 		this.y = y;
-		this.control = createSlider(1, 2);
+		this.control = createSlider(1, 3,int(random(1,3.4)));
 		this.control.style("z-index", "2");
 		this.control.size(70);
 		this.control.position(this.x + 620, this.y + 120);
-		this.filler = hueVal;
+		this.control2 = createSlider(0, 100,int(random(1,99)));
+		this.control2.style("z-index", "2");
+		this.control2.size(70);
+		this.control2.position(this.x + 620, this.y + 140);
 		this.a = this.x + random(-10, 10);
 		this.b = this.y + random(-10, 10);
 		this.aSpeed = this.control.value();
-		this.bspeed = this.control.value();
+		this.bSpeed = this.control.value();
 		this.aSign=1;
 		this.bSign=1;
 		
@@ -33,21 +36,23 @@ class GCell {
 	 */
 	display() {
 		//bg of cell
-		fill(319.7, 97.4, 89.4); //transparent light red
+		let brit =100-this.control2.value();
+		fill(319.7, brit, 89.4); //transparent light red
 		rect(this.x, this.y, 90, 90);
-		this.aSpeed = this.control.value()*this.aSign;
-		this.bSpeed = this.control.value()*this.bSign;
-		if ((this.a <= this.x - 50) || (this.a >= this.x + 40)) {
+		this.aSpeed = this.control.value();
+		this.bSpeed = this.control.value();
+		if ((this.a <= this.x - 40) || (this.a >= this.x + 40)) {
 			this.aSign *= -1;
-			console.log(this.aSign);
+			
 		}
-		if ((this.b <= this.y - 50) || (this.b >= this.y + 40)) {
+		if ((this.b <= this.y - 40) || (this.b >= this.y + 40)) {
 			this.bSign *= -1;
-			console.log(this.bSign);
+			
 		}
-		fill("white");
-		this.a += this.aSpeed;
-		this.b += this.bSpeed;
+		let hueVal=3.6*this.control2.value();
+		fill(hueVal,100,100);
+		this.a += this.aSpeed*this.aSign;
+		this.b += this.bSpeed*this.bSign;
 		ellipse(this.a, this.b, 10, 10);
 		
 	}
